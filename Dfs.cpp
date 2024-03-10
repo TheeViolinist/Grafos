@@ -8,14 +8,15 @@
 DFS::DFS(std::vector<std::vector<int>>*listAdj){
     this->listAdj = listAdj;
     this->n = listAdj->size();
-    /* Dando n + 1, pois vamos de 1 até n*/
-    PS.resize(n + 1, 0);
-    PE.resize(n + 1, 0);
-    v_fathers.resize(n + 1, 0);
+    
+    
+    PS.resize(n, 0);
+    PE.resize(n, 0);
+    v_fathers.resize(n, 0);
     /* Inicializando as configurações iniciais */
     this->t = 0;
     /* Inicializando as cores das arestas todas como preto */
-    std::vector < int > noColor(n + 1, 0);
+    std::vector < int > noColor(n, 0);
     for(int i = 1; i <= n; i++){
         this->matrixColor.push_back(noColor);
     }
@@ -58,17 +59,14 @@ void DFS::writeOutput(int numberInstance){
         std::exit(1);
     }
     output << "nodedef>name VARCHAR,label VARCHAR\n";
-    for(int i = 1; i <= n; i++){
+    for(int i = 1; i < n; i++){
         output << i <<"," << i << "\n";
 
     }
     output << "edgedef>node1 VARCHAR,node2 VARCHAR,directed BOOLEAN,color VARCHAR\n";
 
-    for(int i = 1; i <= n; i++){
-        if(i == 1){
-            std::
-        }
-        for(int j = i + 1; j <= n; j++){
+    for(int i = 1; i < n; i++){
+        for(int j = i + 1; j < n; j++){
             /* Essa é a cor azul */
             if(matrixColor[i][j] == 1){
                 output << i << "," << j << ",false," << "'0,0,255'\n";

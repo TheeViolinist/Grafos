@@ -10,6 +10,7 @@ Bfs::Bfs(std::vector<std::vector<int>>* listAdj){
     this->L.resize(n, 0);
     this->nivel.resize(n, 0);
     this->fathers.resize(n, 0);
+    this->v_listed.resize(n,0); /* Vertices que ja foram adicionados a fila*/
     std::vector < int > colorLine(n, 0);
 
     for(int i = 0; i < n; i++){
@@ -19,46 +20,57 @@ Bfs::Bfs(std::vector<std::vector<int>>* listAdj){
 
 void Bfs::procedure(int root){
     this->fila.push_back(root); /* Coloca v no final da fila*/
-    std::cout << "here" << std::endl;
     while(!fila.empty()){
 
         int v = this->fila.front();
-        
+        this->v_listed[v] = 1;
         fila.pop_front();
+
         std::vector < int > neighbors = this->listAdj->at(v);
         int sizeNeighbors = neighbors.size();
-        std::cout << v << std::endl;
+
+        
         for(int i = 0; i < sizeNeighbors; i++){
             
             int w = neighbors[i];
-            std::cout << w << std::endl;
-            //getchar();
+            /* Se aquele vizinho já foi descoberto, ignoramos  e passamos para o proximo vizinho */
+            if(this->v_listed[w]){
+                continue;
+            }
             if(L[w] == 0){
                 fathers[w] = v;
                 nivel[w] = nivel[v] + 1;
                 this->t += 1;
                 L[w] = t;
-                this->fila.push_back(w);
-                matrixColor[v][w] = matrixColor[w][v] = 1;
-                std::cout << "oi" << std::endl;
+                
+                /* Se ele nunca foi adicionado a fila, o adicionamos como ja listado */
+                if(this->v_listed[w] == 0)
+                    this->fila.push_back(w);
+                matrixColor[v][w] = matrixColor[w][v] =1;
             }
             else{
-                if((nivel[w] == nivel[v])){
+                
+
+                if(nivel[w] == nivel[v]){
                     if(this->fathers[v] == this->fathers[w]){
-                        matrixColor[v][w] = matrixColor[w][v] =  2;  
+                        matrixColor[v][w] = matrixColor[w][v] = 2;  
                     }
                     else{
-                        matrixColor[v][w] = matrixColor[w][v] =  3;
+                        matrixColor[v][w] = matrixColor[w][v] = 3;  
                     }
                 }
                 else if (nivel[w] == nivel[v] + 1){
-                    matrixColor[v][w] = matrixColor[w][v] =  4;
+                    matrixColor[v][w] = matrixColor[w][v] = 4;  
                 
                 }
             }
+            //std::cout << "Cor da aresta: " << v << " " <<  w << " " << matrixColor[v][w] << std::endl;
+            //getchar();
            
            
         }
+        
+       
 
 
     }

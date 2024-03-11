@@ -18,6 +18,7 @@ class Bfs{
         int t;
         int n;
         std::list < int > fila; /*Fila para achar as arestas*/
+        std::vector < int > v_listed; /* Vertices que ja foram encontrados */
 };
 
 

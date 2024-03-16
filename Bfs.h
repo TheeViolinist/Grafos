@@ -8,6 +8,8 @@ class Bfs{
         Bfs(std::vector<std::vector<int>>* listAdj);
         void procedure(int v);
         void writeOutput(int numberInstance);
+        int getHeightTree();
+        void clear();
     private:
         std::vector<std::vector<int>>* listAdj;
     /*  1 representa a cor azul, 2 para a cor vermelha, 3 para amarelo e 4 para verde */
@@ -19,6 +21,7 @@ class Bfs{
         int n;
         std::list < int > fila; /*Fila para achar as arestas*/
         std::vector < int > v_listed; /* Vertices que ja foram encontrados */
+        
 };
 
 

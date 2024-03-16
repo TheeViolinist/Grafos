@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include<fstream>
+#include <algorithm>
 
 Bfs::Bfs(std::vector<std::vector<int>>* listAdj){
     this->t = 0;
@@ -20,21 +21,22 @@ Bfs::Bfs(std::vector<std::vector<int>>* listAdj){
 
 void Bfs::procedure(int root){
     this->fila.push_back(root); /* Coloca v no final da fila*/
-    while(!fila.empty()){
+    while(1){
 
         int v = this->fila.front();
         this->v_listed[v] = 1;
-        fila.pop_front();
 
+        fila.pop_front();
+        
         std::vector < int > neighbors = this->listAdj->at(v);
         int sizeNeighbors = neighbors.size();
 
-        
         for(int i = 0; i < sizeNeighbors; i++){
             
             int w = neighbors[i];
-            /* Se aquele vizinho já foi descoberto, ignoramos  e passamos para o proximo vizinho */
-            if(this->v_listed[w]){
+
+            if(fathers[v] == w)
+            {   
                 continue;
             }
             if(L[w] == 0){
@@ -43,10 +45,8 @@ void Bfs::procedure(int root){
                 this->t += 1;
                 L[w] = t;
                 
-                /* Se ele nunca foi adicionado a fila, o adicionamos como ja listado */
-                if(this->v_listed[w] == 0)
-                    this->fila.push_back(w);
-                matrixColor[v][w] = matrixColor[w][v] =1;
+                matrixColor[v][w] = matrixColor[w][v] = 1;
+                this->fila.push_back(w);
             }
             else{
                 
@@ -64,13 +64,12 @@ void Bfs::procedure(int root){
                 
                 }
             }
-            //std::cout << "Cor da aresta: " << v << " " <<  w << " " << matrixColor[v][w] << std::endl;
-            //getchar();
-           
            
         }
         
-       
+       if(fila.empty()){
+        break;
+       }
 
 
     }
@@ -111,4 +110,22 @@ void Bfs::writeOutput(int numberInstance){
     output.close();
 
    
+}
+
+int Bfs::getHeightTree(){
+    return (*std::max_element(this->nivel.begin(), this->nivel.end()));
+}
+
+void Bfs::clear(){
+    this->t = 0;
+    this->n = listAdj->size();
+    this->listAdj = listAdj;
+    this->L.resize(n, 0);
+    this->nivel.resize(n, 0);
+    this->fathers.resize(n, 0);
+    this->v_listed.resize(n,0); /* Vertices que ja foram adicionados a fila*/
+    for(int i = 0; i < n; i++){
+        matrixColor[i].resize(n,0);
+    }
+    this->fila.resize(0);
 }

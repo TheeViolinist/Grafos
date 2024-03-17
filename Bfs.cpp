@@ -77,7 +77,7 @@ void Bfs::procedure(int root){
 
 void Bfs::writeOutput(int numberInstance){
     std::stringstream outputStream;
-    outputStream << "results/graph_" << numberInstance << "_bfs.gdf";
+    outputStream << "graph_" << numberInstance << "_bfs.gdf";
     std::fstream output(outputStream.str(), std::ios::out);
     if(!output.is_open()){
         std::cout << "Não foi possivel abrir o arquivo." << std::endl;

@@ -52,7 +52,7 @@ void DFS::procedure(int v){
 
 void DFS::writeOutput(int numberInstance){
     std::stringstream outputStream;
-    outputStream << "results/graph_" << numberInstance << "_dfs.gdf";
+    outputStream << "graph_" << numberInstance << "_dfs.gdf";
     std::fstream output(outputStream.str(), std::ios::out);
     if(!output.is_open()){
         std::cout << "Não foi possivel abrir o arquivo." << std::endl;

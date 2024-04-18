@@ -1,13 +1,6 @@
 #include <iostream>
 #include "InstanceReader.hpp"
-
-
-
-
-
-
-
-
+#include "Karger.hpp"
 
 int main(int argc, char** argv){
     
@@ -16,6 +9,18 @@ int main(int argc, char** argv){
     
     InstanceReader instance(argv[1]);
     instance.readInstance();
-
-      return 0;
+    std::vector < std::vector < int > > *matrixAdj = instance.getMatrixAdj();
+    std::vector < tEdges > edges;
+    int n = instance.getSize();
+    
+    /* Só precisamos pegar as arestas do triangulo superior */
+    for(int i = 1; i <= n; i++){
+        for(int j = i + 1; j <= n; j++){
+            tEdges edge;
+            edge.v1 = i;
+            edge.v2 = j;
+            edges.push_back(edge);          
+        }  
+    }
+    return 0;
 }

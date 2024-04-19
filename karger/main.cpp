@@ -16,11 +16,15 @@ int main(int argc, char** argv){
     /* Só precisamos pegar as arestas do triangulo superior */
     for(int i = 1; i <= n; i++){
         for(int j = i + 1; j <= n; j++){
-            tEdges edge(i, j);
-            edges.push_back(edge);          
+            
+            if((*matrixAdj)[i][j]){
+                tEdges edge(i, j);
+                edges.push_back(edge);          
+            }
         }  
     }
 
     Karger karger(&edges, n);
+    karger.algorithm();
     return 0;
 }

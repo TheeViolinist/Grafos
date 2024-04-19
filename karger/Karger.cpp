@@ -38,22 +38,64 @@ int Karger::findSet(int node){
 
 
 int Karger::setUnion(int nodeA, int nodeB){
-    return 0;
+    
+    int root_a = findSet(nodeA);
+    int root_b = findSet(nodeB);
+    
+    /* Se eles estiverem na mesma arvore nao tem como unir */
+    if(root_a == root_b)
+        return 0;
+    /* Vamos colocar a raiz de menor rank como sendo filho da raiz de maior rank */
+    if(this->rank[root_a] >= this->rank[root_b]){
+        this->setDj[root_b] = root_a;
+        this->rank[root_a] += this->rank[root_b] + 1;
+    }else{
+        this->setDj[root_a] = root_b;
+        this->rank[root_b] += this->rank[root_a] + 1;
+    }
+
+    return 1;
 }
+
 void Karger::algorithm(){
     init();
-    
-    while(1){
-      //int sizeEdges = this->edges.size();
-      //std::random_device rd;
-      //std::mt19937 gen(rd());
-      
-      //std::uniform_int_distribution<> dist(0, sizeEdges - 1); /* Retira um indice aleatorio */
-      std::cout << "Digite as arestas para retirar: ";
-      int i, j;
-      std::cin >> i >> j;
 
+    while(1){
+        int sizeEdges = this->edges->size();
+        std::random_device rd;
+        std::mt19937 gen(rd());
+      
+        std::uniform_int_distribution<> dist(0, sizeEdges - 1); /* Retira um indice aleatorio */
+        int id = dist(gen);
+        tEdges *edge = &(*this->edges)[id];  /* aresta aleatoria */
+          
+        int result_union = setUnion(edge->nodeA, edge->nodeB);
+        if(result_union){
+            /* Exclui a aresta selecionada aleatoriamente em O(1) */
+            std::swap((*this->edges)[id], (*this->edges)[sizeEdges - 1]);
+            this->edges->pop_back();
+        }
+        /* O algoritmo so termina quuando tiver apenas 2 raizes */ 
+        
+        int roots = 0;
+        for(int i = 1; i <= n; i++){
+            if(setDj[i] == i)
+                roots++;
+        }
+        if(roots == 2)
+            break;
     }
+
+    for(int i = 0; i <= this->n; i++){
+        std::cout << setDj[i] << " ";
+    }
+    std::cout << std::endl;
+    for(int i = 0; i <= this->n; i++){
+        std::cout << rank[i] << " ";
+    }
+    std::cout << "\n";
+    
+    std::cout << "min cut: " << this->edges->size() << "\n";
 }
 
 

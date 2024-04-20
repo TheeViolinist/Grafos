@@ -1,8 +1,9 @@
 #include "InstanceReader.hpp"
 #include <iostream>
 
-InstanceReader::InstanceReader(const char* inputFileName){
-    this->inputStream.open(inputFileName, std::ios_base::in); 
+InstanceReader::InstanceReader(const char* inputFileName, const char* minCutFileName){
+    this->inputStream.open(inputFileName, std::ios_base::in);
+    this->minCutStream.open(minCutFileName, std::ios_base::in);
 }
 
 
@@ -11,7 +12,9 @@ void InstanceReader::readInstance(){
     
     std::string line;
     std::getline(inputStream, line);
-    this->n = stoi(line); 
+    this->n = stoi(line);
+    std::getline(minCutStream, line);
+    this->minCut = stoi(line);
     /* Como vamos criar uma matriz que inicializa em 1, logo primeira linha e primeira coluna zeradas */
     std::vector < int > zeroValues(n + 1, 0);
     std::vector < int > lineValues;

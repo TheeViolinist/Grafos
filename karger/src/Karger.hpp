@@ -5,7 +5,6 @@
 #include <random>
 #include <iostream>
 
-
 struct tEdges{
   int nodeA;
   int nodeB;
@@ -19,14 +18,15 @@ struct tEdges{
 
 class Karger{
     public:
-        Karger(std::vector < tEdges > * edges, int n);
+        Karger(std::vector < tEdges >  edges, int n, std::vector < std::vector < int >> *matrixAdj);
         void init();
-        void algorithm();
-        int findSet(int node);
+        int algorithm();
+        int findSet(int node, int);
         int setUnion(int nodeA, int nodeB);
 
     private:
-      std::vector < tEdges > *edges;
+      std::vector < tEdges > edges;
+      std::vector < std::vector < int >> *matrixAdj;
       int n;
       std::vector < int > setDj; // Conjuntos disjuntos
       std::vector < int > rank;

@@ -2,6 +2,8 @@
 #include "InstanceReader.hpp"
 #include "Karger.hpp"
 #include "DumbAlgorithm.hpp"
+#include <sstream>
+
 
 int main(int argc, char** argv){
     
@@ -26,20 +28,20 @@ int main(int argc, char** argv){
         }  
     }
     
-    int nExec = 5;
+    int nExec = 1;
     
-    while(nExec <= 20){
+    while(nExec <= 50){
       
       int cMinCutFoundKarger = 0;
       int cMinCutFoundDumb = 0;
       int counter = 0;
-
-      while(counter < 10000){
+      while(counter < 1000){
         int bestMinCutKarger = 1000000;
         int bestMinCutDumb = 1000000;
 
         for(int i = 0; i < nExec; i++){
-          Karger *karger = new Karger(edges, n, matrixAdj);
+
+          Karger *karger = new Karger(edges, n, matrixAdj, "kargerOutput.txt");
           DumbAlgorithm* dumb = new DumbAlgorithm(n, matrixAdj);
           
           int minCutDumb = dumb->algorithm();
@@ -61,9 +63,13 @@ int main(int argc, char** argv){
         }
         counter++;
       }
+        
+      std::cout << nExec << " " << (double)((double)cMinCutFoundKarger/1000) * 100 << " " << (double)((double)cMinCutFoundDumb/1000) * 100 << "\n";
       
-      std::cout << nExec << " " << (double)((double)cMinCutFoundKarger/10000) * 100 << " " << (double)((double)cMinCutFoundDumb/10000) * 100 << "\n";
-      nExec += 5;
+      if(nExec < 5)
+        nExec += 1;
+      else
+        nExec += 3;
     }
     return 0;
 }

@@ -2,10 +2,11 @@
 
 
 
-Karger::Karger(std::vector < tEdges >  edges, int n, std::vector < std::vector < int >> *matrixAdj){
+Karger::Karger(std::vector < tEdges >  edges, int n, std::vector < std::vector < int >> *matrixAdj, const std::string& file_name_out){
     this->edges = edges;
     this->n = n;
-    this->matrixAdj = matrixAdj;   
+    this->matrixAdj = matrixAdj;
+   // this->output.open(file_name_out, std::ios::out);
 }
 
 
@@ -139,6 +140,14 @@ int Karger::algorithm(){
       }
     }
     
+    //output << counterMinCut << "\n";
+    //for(int i = 0; i < sizeNodesA; i++){
+     //   output << nodesRoot_a[i] <<  " ";
+    //}
+    //output << "\n";
+    //for(int i = 0; i < sizeNodesB; i++){
+     //   output << nodesRoot_b[i] << " ";
+    //}
     
     //std::cout << "\nmin cut: " << counterMinCut << "\n";
     return counterMinCut;

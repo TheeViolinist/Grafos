@@ -4,6 +4,9 @@
 #include <vector>
 #include <random>
 #include <iostream>
+#include <fstream>
+#include <string>
+
 
 struct tEdges{
   int nodeA;
@@ -18,7 +21,7 @@ struct tEdges{
 
 class Karger{
     public:
-        Karger(std::vector < tEdges >  edges, int n, std::vector < std::vector < int >> *matrixAdj);
+        Karger(std::vector < tEdges >  edges, int n, std::vector < std::vector < int >> *matrixAdj, const std::string&);
         void init();
         int algorithm();
         int findSet(int node, int);
@@ -30,5 +33,6 @@ class Karger{
       int n;
       std::vector < int > setDj; // Conjuntos disjuntos
       std::vector < int > rank;
+      std::fstream output;
 };
 #endif

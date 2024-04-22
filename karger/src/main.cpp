@@ -35,22 +35,26 @@ int main(int argc, char** argv){
       int cMinCutFoundKarger = 0;
       int cMinCutFoundDumb = 0;
       int counter = 0;
+      int bestA;
+      int bestB;
       while(counter < 1000){
         int bestMinCutKarger = 1000000;
         int bestMinCutDumb = 1000000;
 
         for(int i = 0; i < nExec; i++){
 
-          Karger *karger = new Karger(edges, n, matrixAdj, "kargerOutput.txt");
+          Karger *karger = new Karger(edges, n, matrixAdj);
           DumbAlgorithm* dumb = new DumbAlgorithm(n, matrixAdj);
           
           int minCutDumb = dumb->algorithm();
           int minCutKarger = karger->algorithm();
           if(minCutKarger < bestMinCutKarger){
             bestMinCutKarger = minCutKarger;
+            bestA = bestMinCutKarger;
           }
           if(minCutDumb < bestMinCutDumb){
             bestMinCutDumb = minCutDumb;
+            bestB = bestMinCutDumb;
           }
           delete karger;
           delete dumb;
@@ -64,7 +68,8 @@ int main(int argc, char** argv){
         counter++;
       }
         
-      std::cout << nExec << " " << (double)((double)cMinCutFoundKarger/1000) * 100 << " " << (double)((double)cMinCutFoundDumb/1000) * 100 << "\n";
+      std::cout << nExec << " " << (double)((double)cMinCutFoundKarger/1000) * 100 << " " << (double)((double)cMinCutFoundDumb/1000) * 100 <<
+      " " << bestA << " " << bestB << "\n";
       
       if(nExec < 5)
         nExec += 1;

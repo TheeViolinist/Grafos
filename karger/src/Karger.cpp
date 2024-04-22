@@ -2,11 +2,10 @@
 
 
 
-Karger::Karger(std::vector < tEdges >  edges, int n, std::vector < std::vector < int >> *matrixAdj, const std::string& file_name_out){
+Karger::Karger(std::vector < tEdges >  edges, int n, std::vector < std::vector < int >> *matrixAdj){
     this->edges = edges;
     this->n = n;
     this->matrixAdj = matrixAdj;
-   // this->output.open(file_name_out, std::ios::out);
 }
 
 
@@ -100,17 +99,6 @@ int Karger::algorithm(){
             break;
     }
     
-    /*
-    for(int i = 0; i <= this->n; i++){
-        std::cout << setDj[i] << " ";
-    }
-    std::cout << std::endl;
-    for(int i = 0; i <= this->n; i++){
-        std::cout << rank[i] << " ";
-    }
-    std::cout << "\n";
-    std::cout << "roots: " << root_a << " " << root_b << "\n";
-    */
     /* Vamos dar um findSet para todo vertice e achar para qual raizes eles pertencem */
     
     std::vector < int > nodesRoot_a;
@@ -140,16 +128,6 @@ int Karger::algorithm(){
       }
     }
     
-    //output << counterMinCut << "\n";
-    //for(int i = 0; i < sizeNodesA; i++){
-     //   output << nodesRoot_a[i] <<  " ";
-    //}
-    //output << "\n";
-    //for(int i = 0; i < sizeNodesB; i++){
-     //   output << nodesRoot_b[i] << " ";
-    //}
-    
-    //std::cout << "\nmin cut: " << counterMinCut << "\n";
     return counterMinCut;
 }
 

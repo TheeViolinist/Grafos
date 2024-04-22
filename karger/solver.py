@@ -22,6 +22,8 @@ def main():
             output_str = output.decode('utf-8')
             results = output_str.rstrip().split('\n')
             print(results)
+            results.pop(len(results) - 1)
+            results.pop(len(results) - 1)
             data = list()
             x = list() #Abcissa de y e z
             y = list()
